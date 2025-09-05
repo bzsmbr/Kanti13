@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formok</title>
+</head>
+<body>
+    <form id="form">
+        <input id="nev" type="text" placeholder="név">
+        <br>
+        <input id="iranyito" type="text" placeholder="Irányitószám">
+        <br>
+        <input id="telepules" type="text" placeholder="település">
+        <br>
+        <input id="utca" type="text" placeholder="utca">
+        <br>
+        <input id="hazSzam" type="text" placeholder="Ház szám">
+        <br>
+        <button type="submit">Küldés</button>
+    </form>
+</body>
+
+<script>
+    document.getElementById("form").addEventListener('submit', function(event) 
+    {
+        event.preventDefault();
+
+        const nev = document.getElementById('nev').value;
+        const iranyito = document.getElementById('iranyito').value;
+        const telepules = document.getElementById('telepules').value;
+        const utca = document.getElementById('utca').value;
+        const hazSzam = document.getElementById('hazSzam').value;
+
+        localStorage.setItem('nev', nev);
+        localStorage.setItem('iranyito', iranyito);
+        localStorage.setItem('telepules', telepules);
+        localStorage.setItem('utca', utca);
+        localStorage.setItem('hazSzam', hazSzam);
+        
+        alert('Adatok elmentve local storage-ba!');
+
+        console.log(nev);
+        console.log(iranyito);
+        console.log(telepules);
+        console.log(utca);
+        console.log(hazSzam);
+
+    });
+</script>
+</html>
