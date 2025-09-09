@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vicc Generátor</title>
+  <style>
+    :root {
+      --primary-color: #0077cc;
+      --primary-dark: #005fa3;
+      --background: #f9fbff;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --secondary-text: #666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: black;
+      color: var(--text-color);
+      padding: 2rem 1rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary-dark);
+      transform: scale(1.02);
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    #jokeDisplay {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .joke {
+      margin-bottom: 1rem;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .setup {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .punchline {
+      margin-top: 0.5rem;
+      color: var(--secondary-text);
+      font-style: italic;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .form-group {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Vicc Generátor</h1>
+
+  <form id="form">
+    <button id="randomJoke" type="button">Véletlenszerű vicc</button>
+
+    <div class="form-group">
+      <input type="number" id="jokeIdInput" placeholder="Adj meg egy ID-t..." />
+      <button id="jokeById" type="button">Keresés ID alapján</button>
+    </div>
+
+    <div class="form-group">
+      <select name="themes" id="jokeTheme">
+        <option value="general">General</option>
+        <option value="knock-knock">Knock-knock</option>
+        <option value="programming">Programming</option>
+      </select>
+      <button id="jokeByTheme" type="button">Téma alapján</button>
+    </div>
+  </form>
+
+  <div id="jokeDisplay"></div>
+
+  <script>
+    const jokeDisplay = document.getElementById('jokeDisplay');
+
+    function displayJoke(joke) {
+      if (!joke || !joke.setup) {
+        jokeDisplay.innerHTML = `<p>Nem található vicc!</p>`;
+        return;
+      }
+
+      jokeDisplay.innerHTML = `
+        <div class="joke">
+          <div class="setup">${joke.setup}</div>
+          <div class="punchline">${joke.punchline}</div>
+        </div>
+      `;
+    }
+
+    async function fetchJoke(url) {
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (Array.isArray(data)) {
+          const randomJoke = data[Math.floor(Math.random() * data.length)];
+          displayJoke(randomJoke);
+        } else {
+          displayJoke(data);
+        }
+      } catch (error) {
+        console.error(error);
+        jokeDisplay.innerHTML = `<p>⚠️ Hiba történt a vicc lekérésekor.</p>`;
+      }
+    }
+
+    document.getElementById('randomJoke').addEventListener('click', () => {
+      fetchJoke('https://official-joke-api.appspot.com/random_joke');
+    });
+
+    document.getElementById('jokeById').addEventListener('click', () => {
+      const id = document.getElementById('jokeIdInput').value;
+      if (id) {
+        fetchJoke(`https://official-joke-api.appspot.com/jokes/${id}`);
+      } else {
+        jokeDisplay.innerHTML = `<p>⚠️ Adj meg egy érvényes ID-t!</p>`;
+      }
+    });
+
+    document.getElementById('jokeByTheme').addEventListener('click', () => {
+      const theme = document.getElementById('jokeTheme').value;
+      fetchJoke(`https://official-joke-api.appspot.com/jokes/${theme}/ten`);
+    });
+  </script>
+</body>
+</html>
