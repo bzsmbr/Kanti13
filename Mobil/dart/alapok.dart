@@ -1,5 +1,5 @@
 //nev, iranyito, telepules, utca, hsz, atlag
-import 'dart:io';
+
 //valtozok
 void main() {
   String nev = "Pankix";
