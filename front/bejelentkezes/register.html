@@ -42,7 +42,9 @@
             const result = document.getElementById("result");
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email) && pwd1 !== pwd2) {
+            if (email === "") {
+                result.textContent = "";
+            } else if (!emailRegex.test(email) && pwd1 !== pwd2) {
                 result.innerHTML = "<p>Érvénytelen e-mail cím!<br>A két jelszó nem egyezik!</p>";
                 return;
             } else if (!emailRegex.test(email)) {
