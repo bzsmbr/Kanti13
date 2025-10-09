@@ -10,9 +10,21 @@ db.prepare(
     )`,
 ).run();
 
-export const getPosts = () => db.prepare('SELECT * FROM posts');
-export const getPostsByUsers = (userId) => db.prepare('SELECT * FROM posts WHERE userId = ?').get(userId);
-export const getPostById = (id) => db.prepare('SELECT * FROM users WHERE id = ?').get(id);
-export const getUsersByTitle = (title) => db.prepare('SELECT * FROM users WHERE title = ?').get(title);
-export const savePost = (title, content, userId) => db.prepare('INSERT INTO users (name, email, password) VALUES (?,?,?)').run(name, email, password);
-export const updateUser = (id, name, email, password) => db.prepare('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ? ').run(name, email, password, id);
+export const getPosts = () => db.prepare('SELECT * FROM posts').all();
+
+export const getPostById = (id) => db.prepare('SELECT * FROM posts WHERE id = ?').run(id);
+
+export const getPostByUserId = (userId) =>
+    db.prepare('SELECT * FROM posts WHERE userId = ?').run(userId);
+
+export const createPost = (userId, title, content) =>
+    db
+        .prepare('INSERT INTO posts (userId, title, content) VALUES (?, ?, ?)')
+        .run(userId, title, content);
+
+export const updatePost = (id, userId, title, content) =>
+    db
+        .prepare('UPDATE posts SET userId = ?, title = ?, content = ? WHERE id = ?')
+        .run(userId, title, content, id);
+
+export const deletePost = (id) => db.prepare('DELETE FROM posts WHERE id = ?').run(id);

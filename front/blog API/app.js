@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import postRoutes from "./routes/postRoutes.js"
-import userRoutes from "./routes/userRoutes.js"
+import postsRoutes from './routes/postsRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
 
 const PORT = 3000;
 const app = express();
@@ -9,9 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/posts", postRoutes);
-app.use("/users", userRoutes);
+app.use('/posts', postsRoutes);
+app.use('/users', usersRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server runs`);
-})
+    console.log(`Server is running on port ${PORT}`);
+});
