@@ -1,80 +1,51 @@
 void main() {
-    //1. feladat
-    num sumOfArray = sum([1, -3, 2, 3, 4, -1]);
-    print(sumOfArray); 
+  print(headTail("alma")); // maal
+  print(headTail("ablak")); // aklab
 
-    //2. feladat
-    List<int> oddOut = oddOnesOut([1, 2, 3, 1, 3, 3]);
-    print(oddOut);
+  print(evenFizz(4)); // Even
+  print(evenFizz(9)); // Fizz
+  print(evenFizz(12)); // EvenFizz
+  print(evenFizz(17)); // 17
 
-    //3. feladat
-    List<num> flatten = flattenAndSort([[1, 3, 5], [100], [2, 4, 6]]);
-    print(flatten);
+  print(likeFibo(0)); // []
+  print(likeFibo(1)); // [0]
+  print(likeFibo(2)); // [0, 1]
+  print(likeFibo(3)); // [0, 1, 1]
+  print(likeFibo(10)); // [0, 1, 1, 1, 2, 3, 4, 6, 9, 13]
 
-    //4. feladat
-    int dupes = duplicateCount("aabbcde");
-    print(dupes);
+  print(vowelLower("alma")); // aLMa
+  print(vowelLower("ablak")); // aBLaK
 }
 
-//1. feladat
-num sum(List<num> arr) {
-    num sum = 0;
-    
-    for(num item in arr) {
-        sum += item;
-    }
-
-    return sum;
+String headTail(String txt) {
+  int mid = (txt.length / 2).floor();
+  String first = txt.substring(0, mid);
+  String second = txt.substring(mid);
+  return second + first;
 }
 
-//2. feladat
-List<int> oddOnesOut(List<int> nums) {
-    var count = <int, int>{};
-    for (var n in nums) {
-        count[n] = (count[n] ?? 0) +1;
-    }
-
-    var result = <int>[];
-    for(var n in nums) {
-        if(count[n]! % 2 == 0) {
-            result.add(n);
-        }
-    }
-return result;
+String evenFizz(int number) {
+  if (number % 6 == 0) return "EvenFizz";
+  if (number % 2 == 0) return "Even";
+  if (number % 3 == 0) return "Fizz";
+  return number.toString();
 }
 
-//3. feladat
-List<int> flattenAndSort(List<List<int>> nums) {
-    List<int> result = [];
-
-    for(var inner in nums) {
-        for(var n in inner) {
-            result.add(n);
-        }
-    }
-
-    result.sort();
-
-    return result;
+List<int> likeFibo(int number) {
+  if (number == 0) return [];
+  if (number == 1) return [0];
+  if (number == 2) return [0, 1];
+  List<int> res = [0, 1, 1];
+  for (int i = 3; i < number; i++) {
+    res.add(res[i - 1] + res[i - 3]);
+  }
+  return res;
 }
 
-//4. feladat
-int duplicateCount(String text){
-    text = text.toLowerCase();
-
-    Map<String, int> count = {};
-
-    for (var c in text.split('')) {
-        count[c] = (count[c] ?? 0) + 1;
-    }
-
-    int dupes = 0;
-
-    count.forEach((key, value) {
-        if(value > 1) {
-            dupes++;
-        }
-    });
-
-return dupes;
+String vowelLower(String txt) {
+  final vowels = 'aeiouAEIOU';
+  return txt
+      .split('')
+      .map((c) => vowels.contains(c) ? c.toLowerCase() : c.toUpperCase())
+      .join('');
 }
