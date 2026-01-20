@@ -1,0 +1,42 @@
+header {
+    background-color: slateblue;
+    font-weight: lighter;
+    height: 50px;
+    font-size: x-large;
+}
+
+.counterValueText {
+    font-size: small;
+    text-align: center;
+    margin-top: 20vh;
+}
+
+#counterValue {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.button {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px;
+    border: 2px solid purple;
+    background-color: pink;
+}
+
+.button1 {
+    margin: 1vh 2vh 2vh auto;
+}
+
+.button2 {
+    margin: 1vh auto 2vh 2vh;
+}
+
+.button3 {
+    margin: 1vh 5vh 2vh auto;
+}
+
+.button4 {
+    margin: 1vh auto 2vh 5vh;
+}
