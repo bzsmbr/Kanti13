@@ -1,0 +1,30 @@
+.container {
+    width: 90%;
+    background-color: white;
+    padding-top: 5px;
+}
+
+.navbar {
+    background-color: blue;
+}
+
+h1 {
+    text-align: center;
+    color: blue;
+}
+.list {
+    margin: auto;
+}
+
+.row {
+    background-color: blue;
+}
+
+.card {
+    padding: 5px;
+    text-align: justify;
+}
+
+body {
+    background-color: aqua;
+}
